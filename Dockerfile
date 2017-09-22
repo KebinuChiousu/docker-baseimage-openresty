@@ -114,6 +114,7 @@ RUN mkdir /etc/service/openresty
 COPY openresty.sh /etc/service/openresty/run
 RUN chmod +x /etc/service/openresty/run
 
+EXPOSE 80
 VOLUME /usr/local/openresty/nginx
 
 # Clean up APT when done.
