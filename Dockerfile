@@ -120,6 +120,9 @@ RUN apt-get update && apt-get -y install \
     php5.6-gd \
     php5.6-redis
 
+# Install lua modules
+RUN /usr/local/openresty/bin/opm get openresty/lua-resty-redis
+
 # Add additional binaries into PATH for convenience
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin/:/usr/local/openresty/nginx/sbin/:/usr/local/openresty/bin/
 
