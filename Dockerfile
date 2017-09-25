@@ -125,11 +125,17 @@ ENV PATH=$PATH:/usr/local/openresty/luajit/bin/:/usr/local/openresty/nginx/sbin/
 
 # Setup openresty service
 RUN mkdir /etc/service/openresty
-COPY openresty.sh /etc/service/openresty/run
+COPY service/openresty.sh /etc/service/openresty/run
 RUN chmod +x /etc/service/openresty/run
+
+# Setup php-fpm service
+RUN mkdir /etc/service/php-fpm
+COPY service/php-fpm.sh /etc/service/php-fpm/run
+RUN chmod +x /etc/service/php-fpm/run
 
 EXPOSE 80
 VOLUME /usr/local/openresty/nginx
+VOLUME /etc/php
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
