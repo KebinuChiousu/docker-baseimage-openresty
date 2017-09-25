@@ -106,6 +106,20 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
     && ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log
 
+# Add to repository sources list
+RUN add-apt-repository ppa:ondrej/php
+
+# Update cache and install php5
+RUN apt-get update && apt-get -y install \
+    php5.6 \
+    php5.6-fpm \
+    php5.6-cli \
+    php5.6-mysql \
+    php5.6-curl \
+    php5.6-mcrypt \
+    php5.6-gd \
+    php5.6-redis
+
 # Add additional binaries into PATH for convenience
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin/:/usr/local/openresty/nginx/sbin/:/usr/local/openresty/bin/
 
