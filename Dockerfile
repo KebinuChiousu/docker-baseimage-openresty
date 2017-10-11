@@ -106,20 +106,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
     && ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log
 
-# Add to repository sources list
-RUN add-apt-repository ppa:ondrej/php
-
-# Update cache and install php5
-RUN apt-get update && apt-get -y install \
-    php5.6 \
-    php5.6-fpm \
-    php5.6-cli \
-    php5.6-mysql \
-    php5.6-curl \
-    php5.6-mcrypt \
-    php5.6-gd \
-    php5.6-redis
-
 # Install lua modules
 RUN /usr/local/openresty/bin/opm get openresty/lua-resty-redis
 
@@ -131,14 +117,8 @@ RUN mkdir /etc/service/openresty
 COPY service/openresty.sh /etc/service/openresty/run
 RUN chmod +x /etc/service/openresty/run
 
-# Setup php-fpm service
-RUN mkdir /etc/service/php-fpm
-COPY service/php-fpm.sh /etc/service/php-fpm/run
-RUN chmod +x /etc/service/php-fpm/run
-
 EXPOSE 80
 VOLUME /usr/local/openresty/nginx
-VOLUME /etc/php
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
